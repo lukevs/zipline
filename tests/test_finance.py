@@ -30,7 +30,7 @@ from testfixtures import TempDirectory
 from zipline.assets.synthetic import make_simple_equity_info
 from zipline.finance.blotter import Blotter
 from zipline.finance.execution import MarketOrder, LimitOrder
-from zipline.finance.performance import PerformanceTracker
+from zipline.finance.metrics import MetricsTracker
 from zipline.finance.trading import SimulationParameters
 from zipline.data.us_equity_pricing import BcolzDailyBarReader
 from zipline.data.minute_bars import BcolzMinuteBarReader
@@ -285,8 +285,11 @@ class FinanceTestCase(WithLogger,
             else:
                 alternator = 1
 
-            tracker = PerformanceTracker(sim_params, self.trading_calendar,
-                                         self.env)
+            tracker = MetricsTracker(
+                sim_params,
+                self.trading_calendar,
+                self.env,
+            )
 
             # replicate what tradesim does by going through every minute or day
             # of the simulation and processing open orders each time
